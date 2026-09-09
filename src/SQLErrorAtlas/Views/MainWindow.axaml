@@ -10,7 +10,7 @@
         Icon="/Assets/app.ico"
         Width="1100" Height="720"
         MinWidth="820" MinHeight="520"
-        Title="SQL Error Atlas">
+        Title="SQL Error Atlas - ronald.de.groot@opendata.nl">
 
     <DockPanel>
         <!-- Toolbar -->
