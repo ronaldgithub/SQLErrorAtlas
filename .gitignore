@@ -1,0 +1,29 @@
+# Build output
+bin/
+obj/
+publish/
+artifacts/
+*.user
+
+# Rider / VS
+.idea/
+.vs/
+_ReSharper*/
+*.suo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Inno Setup compiled installers
+build/Output/
+*.exe.bak
+
+# Local env
+*.env
+appsettings.Local.json
+
+# MCP SQL Server audit log (local tooling artifact)
+/logs/
+
+# NOTE: data/*.duckdb is intentionally committed (it is the shipped dataset)

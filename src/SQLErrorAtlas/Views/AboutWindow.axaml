@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SQLErrorAtlas.ViewModels"
+        x:Class="SQLErrorAtlas.Views.AboutWindow"
+        x:DataType="vm:AboutViewModel"
+        Title="About SQL Error Atlas"
+        Width="520" SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+
+    <StackPanel Margin="22" Spacing="10">
+        <TextBlock Text="SQL Error Atlas" FontSize="20" FontWeight="SemiBold"/>
+        <TextBlock Classes="subtle">
+            <Run Text="Version"/><Run Text="{Binding Version}"/>
+        </TextBlock>
+
+        <TextBlock Text="{Binding Purpose}" TextWrapping="Wrap"/>
+        <TextBlock Text="{Binding PrivacyLine}" TextWrapping="Wrap" FontWeight="SemiBold"/>
+
+        <Border Classes="card">
+            <StackPanel Spacing="4">
+                <TextBlock Text="{Binding DataProvenance}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding DataAsOf}" Classes="subtle" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+
+        <TextBlock Text="{Binding License}" Classes="subtle"/>
+        <TextBlock Text="{Binding Disclaimer}" Classes="subtle" TextWrapping="Wrap"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="Open GitHub repo" Command="{Binding OpenRepoCommand}"/>
+            <Button Content="Copy diagnostics" Command="{Binding CopyDiagnosticsCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Derive version
+        id: v
+        shell: bash
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Test
+        run: dotnet test SQLErrorAtlas.slnx -c Release
+
+      - name: Publish (self-contained, single file)
+        run: >
+          dotnet publish src/SQLErrorAtlas/SQLErrorAtlas.csproj
+          -c Release -r win-x64 --self-contained
+          -p:PublishSingleFile=true
+          -p:Version=${{ steps.v.outputs.version }}
+          -p:InformationalVersion=${{ steps.v.outputs.version }}
+          -o build/publish
+
+      - name: Portable zip
+        shell: pwsh
+        run: Compress-Archive -Path build/publish/* -DestinationPath "SQLErrorAtlas-${{ steps.v.outputs.version }}-win-x64.zip"
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DAppVersion=${{ steps.v.outputs.version }} build/installer.iss'
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/Output/SQLErrorAtlas-Setup-${{ steps.v.outputs.version }}.exe
+            SQLErrorAtlas-${{ steps.v.outputs.version }}-win-x64.zip
+          generate_release_notes: true

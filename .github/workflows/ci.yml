@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore SQLErrorAtlas.slnx
+
+      - name: Build
+        run: dotnet build SQLErrorAtlas.slnx -c Release --no-restore
+
+      - name: Test
+        run: dotnet test SQLErrorAtlas.slnx -c Release --no-build --verbosity normal

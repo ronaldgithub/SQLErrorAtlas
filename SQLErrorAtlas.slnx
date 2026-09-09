@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SQLErrorAtlas/SQLErrorAtlas.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SQLErrorAtlas.Tests/SQLErrorAtlas.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/DbExport/DbExport.csproj" />
+  </Folder>
+</Solution>
