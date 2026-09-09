@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <AssemblyName>SQLErrorAtlas</AssemblyName>
+    <RootNamespace>SQLErrorAtlas</RootNamespace>
+    <Product>SQL Error Atlas</Product>
+    <Company>Ronald de Groot</Company>
+    <Version>0.1.0</Version>
+    <InformationalVersion>0.1.0</InformationalVersion>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- RID / self-contained / single-file are supplied on the `dotnet publish`
+         command line (see README and .github/workflows/release.yml), not here,
+         so a plain `dotnet build` and the test project stay framework-dependent. -->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(PublishSingleFile)' == 'true'">
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <EmbeddedResource Include="..\..\data\sqlerroratlas.duckdb">
+      <LogicalName>SQLErrorAtlas.Data.sqlerroratlas.duckdb</LogicalName>
+      <Link>Data\sqlerroratlas.duckdb</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.21" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.21" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.21" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.21" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.21">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
+    <PackageReference Include="Markdown.Avalonia" Version="11.0.3" />
+    <PackageReference Include="DuckDB.NET.Data.Full" Version="1.5.5" />
+  </ItemGroup>
+</Project>

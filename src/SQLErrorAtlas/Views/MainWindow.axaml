@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SQLErrorAtlas.ViewModels"
+        xmlns:views="using:SQLErrorAtlas.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="720"
+        x:Class="SQLErrorAtlas.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/app.ico"
+        Width="1100" Height="720"
+        MinWidth="820" MinHeight="520"
+        Title="SQL Error Atlas">
+
+    <DockPanel>
+        <!-- Toolbar -->
+        <Border DockPanel.Dock="Top" Padding="12,8" BorderThickness="0,0,0,1"
+                BorderBrush="{DynamicResource CardBackgroundBrush}">
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                <TextBlock Grid.Column="0" Text="SQL Error Atlas" FontSize="16" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="offline SQL Server ERRORLOG triage"
+                           Classes="subtle" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                <ComboBox Grid.Column="2" ItemsSource="{Binding ThemeOptions}"
+                          SelectedItem="{Binding SelectedTheme}" MinWidth="96"
+                          VerticalAlignment="Center" ToolTip.Tip="Theme"/>
+                <Button Grid.Column="3" Content="About" Margin="8,0,0,0"
+                        Command="{Binding ShowAboutCommand}" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Status bar -->
+        <Border DockPanel.Dock="Bottom" Padding="12,4" BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource CardBackgroundBrush}">
+            <TextBlock Text="{Binding DataAsOfText}" Classes="subtle"/>
+        </Border>
+
+        <TabControl SelectedIndex="{Binding SelectedTabIndex}" Padding="12">
+            <TabItem Header="Analyze log">
+                <views:AnalyzeView DataContext="{Binding Analyze}"/>
+            </TabItem>
+            <TabItem Header="Lookup">
+                <views:LookupView DataContext="{Binding Lookup}"/>
+            </TabItem>
+            <TabItem Header="Browse groups">
+                <views:BrowseView DataContext="{Binding Browse}"/>
+            </TabItem>
+            <TabItem Header="Search">
+                <views:SearchView DataContext="{Binding SearchTab}"/>
+            </TabItem>
+            <TabItem Header="Runbooks">
+                <views:IssuesView DataContext="{Binding Issues}"/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:SQLErrorAtlas.ViewModels"
+             xmlns:views="using:SQLErrorAtlas.Views"
+             xmlns:m="using:SQLErrorAtlas.Models"
+             x:Class="SQLErrorAtlas.Views.SearchView"
+             x:DataType="vm:SearchViewModel">
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Spacing="6" Margin="0,0,0,10">
+            <TextBox Name="SearchBox" Text="{Binding Query}"
+                     Watermark="Search messages, playbook, groups, runbooks…"/>
+            <TextBlock Text="{Binding StatusText}" Classes="subtle"/>
+        </StackPanel>
+
+        <Grid ColumnDefinitions="420,*">
+            <ListBox Grid.Column="0" Margin="0,0,10,0"
+                     ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedHit}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="m:SearchHit">
+                        <StackPanel Margin="0,3" Spacing="2">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border Classes="badge" Background="{DynamicResource CodeBackgroundBrush}">
+                                    <TextBlock Text="{Binding Kind}" FontSize="10"/>
+                                </Border>
+                                <TextBlock Text="{Binding Title}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Snippet}" Classes="subtle" TextWrapping="Wrap" MaxLines="3"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <views:EntryDetailView Grid.Column="1" DataContext="{Binding Detail}"/>
+        </Grid>
+    </DockPanel>
+</UserControl>

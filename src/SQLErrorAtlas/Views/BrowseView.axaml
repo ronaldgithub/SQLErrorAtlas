@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:SQLErrorAtlas.ViewModels"
+             xmlns:views="using:SQLErrorAtlas.Views"
+             xmlns:m="using:SQLErrorAtlas.Models"
+             xmlns:local="using:SQLErrorAtlas"
+             x:Class="SQLErrorAtlas.Views.BrowseView"
+             x:DataType="vm:BrowseViewModel">
+
+    <Grid ColumnDefinitions="260,*">
+        <!-- Group list -->
+        <ListBox Grid.Column="0" Margin="0,0,10,0"
+                 ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="m:GroupSummary">
+                    <StackPanel Spacing="1" Margin="0,2">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Border Classes="badge"
+                                    Background="{Binding Urgency, Converter={x:Static local:Converters.UrgencyToBrush}}">
+                                <TextBlock Text="{Binding Urgency}" Foreground="#111" FontSize="10" FontWeight="SemiBold"/>
+                            </Border>
+                            <TextBlock Text="{Binding AreaTag}" Classes="subtle" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding GroupName}" TextWrapping="Wrap"/>
+                        <TextBlock Classes="subtle">
+                            <Run Text="{Binding MessageCount}"/><Run Text=" messages · "/>
+                            <Run Text="{Binding PlaybookCount}"/><Run Text=" playbook"/>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,*" IsVisible="{Binding HasGroup}">
+            <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,8">
+                <TextBlock Text="{Binding GroupName}" Classes="h1"/>
+            </StackPanel>
+
+            <TabControl Grid.Row="1">
+                <TabItem Header="Guidance">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" Padding="0,0,14,0">
+                        <StackPanel Spacing="4" Margin="0,4,0,0">
+                            <TextBlock Text="What it means" Classes="section"/>
+                            <TextBlock Text="{Binding WhatItMeans}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Investigate" Classes="section"/>
+                            <TextBlock Text="{Binding Investigate}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Fix" Classes="section"/>
+                            <TextBlock Text="{Binding Fix}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Key tools" Classes="section"/>
+                            <TextBlock Text="{Binding KeyTools}" TextWrapping="Wrap"/>
+
+                            <StackPanel IsVisible="{Binding HasRelatedIssues}" Spacing="4">
+                                <TextBlock Text="Related deep-dive runbooks" Classes="section"/>
+                                <ItemsControl ItemsSource="{Binding RelatedIssues}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button HorizontalAlignment="Left"
+                                                    Command="{Binding $parent[ItemsControl].((vm:BrowseViewModel)DataContext).OpenIssueCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock>
+                                                    <Run Text="Issue"/><Run Text="{Binding IssueId}"/>
+                                                    <Run Text=" — "/><Run Text="{Binding Title}"/>
+                                                </TextBlock>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <TabItem Header="Playbook entries">
+                    <Grid ColumnDefinitions="320,*">
+                        <ListBox Grid.Column="0" Margin="0,0,10,0"
+                                 ItemsSource="{Binding Playbooks}" SelectedItem="{Binding SelectedPlaybook}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="m:PlaybookRef">
+                                    <StackPanel Margin="0,2">
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Run Text="{Binding MessageId}" FontWeight="Bold"/>
+                                            <Run Text="  "/><Run Text="{Binding ShortName}"/>
+                                        </TextBlock>
+                                        <TextBlock Classes="subtle">
+                                            <Run Text="{Binding Urgency}"/><Run Text=" · "/><Run Text="{Binding Status}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <views:EntryDetailView Grid.Column="1" DataContext="{Binding Detail}"/>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="All messages">
+                    <Grid ColumnDefinitions="360,*">
+                        <ListBox Grid.Column="0" Margin="0,0,10,0"
+                                 ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="m:CatalogRef">
+                                    <StackPanel Margin="0,2">
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Run Text="{Binding MessageId}" FontWeight="Bold"/>
+                                            <Run Text=" (sev "/><Run Text="{Binding Severity}"/><Run Text=")"/>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding MessageText}" Classes="subtle"
+                                                   TextWrapping="Wrap" MaxLines="2"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <views:EntryDetailView Grid.Column="1" DataContext="{Binding Detail}"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <TextBlock Grid.Column="1" Text="Select a group." Classes="subtle"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   IsVisible="{Binding !HasGroup}"/>
+    </Grid>
+</UserControl>

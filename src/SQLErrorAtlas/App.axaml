@@ -1,0 +1,67 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SQLErrorAtlas.App"
+             xmlns:local="using:SQLErrorAtlas"
+             RequestedThemeVariant="Dark">
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="UrgencyEmergencyBrush" Color="#F87171"/>
+                    <SolidColorBrush x:Key="UrgencyHighBrush" Color="#FB923C"/>
+                    <SolidColorBrush x:Key="UrgencyMediumBrush" Color="#FBBF24"/>
+                    <SolidColorBrush x:Key="UrgencyLowBrush" Color="#60A5FA"/>
+                    <SolidColorBrush x:Key="UrgencyInfoBrush" Color="#9CA3AF"/>
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1F2430"/>
+                    <SolidColorBrush x:Key="CodeBackgroundBrush" Color="#11151C"/>
+                    <SolidColorBrush x:Key="SubtleTextBrush" Color="#9AA4B2"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="UrgencyEmergencyBrush" Color="#DC2626"/>
+                    <SolidColorBrush x:Key="UrgencyHighBrush" Color="#EA580C"/>
+                    <SolidColorBrush x:Key="UrgencyMediumBrush" Color="#D97706"/>
+                    <SolidColorBrush x:Key="UrgencyLowBrush" Color="#2563EB"/>
+                    <SolidColorBrush x:Key="UrgencyInfoBrush" Color="#6B7280"/>
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#F3F4F6"/>
+                    <SolidColorBrush x:Key="CodeBackgroundBrush" Color="#ECECEC"/>
+                    <SolidColorBrush x:Key="SubtleTextBrush" Color="#565F6B"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{DynamicResource SubtleTextBrush}"/>
+            <Setter Property="Margin" Value="0,12,0,4"/>
+        </Style>
+        <Style Selector="TextBlock.subtle">
+            <Setter Property="Foreground" Value="{DynamicResource SubtleTextBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style Selector="Border.badge">
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="6,1"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Application.Styles>
+</Application>
