@@ -10,6 +10,8 @@ no SQL Server connection. The whole knowledge base travels inside the executable
 > "SQL Server" is a trademark of Microsoft Corporation. SQL Error Atlas is an
 > independent tool and is not affiliated with or endorsed by Microsoft.
 
+![Analyze a pasted ERRORLOG](pic/error.png)
+
 ## Install
 
 Download the latest **`SQLErrorAtlas-Setup-<version>.exe`** from the
@@ -37,6 +39,15 @@ Every error number resolves to either a **message-specific playbook entry** or,
 if none exists yet, the **group-level guidance** for its area — so there is always
 an answer. Dark mode by default; toggle in the toolbar. Everything is local:
 no telemetry, no network calls.
+
+### More screens
+
+| | |
+| --- | --- |
+| **Lookup** — one number, one answer | **Browse groups** — the 32-area taxonomy |
+| [![Lookup](pic/lookup.png)](pic/lookup.png) | [![Browse groups](pic/browsegroup.png)](pic/browsegroup.png) |
+| **Search** — messages, playbook, groups, runbooks | **Runbooks** — long-form incident write-ups |
+| [![Search](pic/search.png)](pic/search.png) | [![Runbooks](pic/runbook.png)](pic/runbook.png) |
 
 ## What's in the box
 
