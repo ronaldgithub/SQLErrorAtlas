@@ -8,6 +8,7 @@ namespace SQLErrorAtlas.ViewModels;
 public partial class AboutViewModel : ViewModelBase
 {
     private const string RepoUrl = "https://github.com/ronaldgithub/SQLErrorAtlas";
+    private const string ContactEmail = "ronald.de.groot@opendata.nl";
 
     private readonly AtlasMeta _meta;
     private readonly string _dataPath;
@@ -46,6 +47,15 @@ public partial class AboutViewModel : ViewModelBase
     public string Disclaimer =>
         "\"SQL Server\" is a trademark of Microsoft Corporation. SQL Error Atlas is an independent tool and is not affiliated with or endorsed by Microsoft.";
 
+    /// <summary>Version + environment block, appended to bug reports / help e-mails.</summary>
+    private string Diagnostics =>
+        $"SQL Error Atlas {Version}\n" +
+        $"{DataAsOf}\n" +
+        $"{DataProvenance}\n" +
+        $"DuckDB.NET: {typeof(DuckDB.NET.Data.DuckDBConnection).Assembly.GetName().Version}\n" +
+        $"Runtime: {Environment.Version} · OS: {Environment.OSVersion}\n" +
+        $"Data file: {_dataPath}";
+
     [RelayCommand]
     private async Task OpenRepoAsync()
     {
@@ -55,14 +65,22 @@ public partial class AboutViewModel : ViewModelBase
     [RelayCommand]
     private async Task CopyDiagnosticsAsync()
     {
+        if (UiServices.Current is { } ui) await ui.SetClipboardTextAsync(Diagnostics);
+    }
+
+    /// <summary>Open the user's mail client with a pre-filled message to the author.</summary>
+    [RelayCommand]
+    private async Task SendMessageAsync()
+    {
         if (UiServices.Current is not { } ui) return;
-        var text =
-            $"SQL Error Atlas {Version}\n" +
-            $"{DataAsOf}\n" +
-            $"{DataProvenance}\n" +
-            $"DuckDB.NET: {typeof(DuckDB.NET.Data.DuckDBConnection).Assembly.GetName().Version}\n" +
-            $"Runtime: {Environment.Version} · OS: {Environment.OSVersion}\n" +
-            $"Data file: {_dataPath}";
-        await ui.SetClipboardTextAsync(text);
+
+        const string subject = "SQL Error Atlas - help";
+        var body =
+            "Describe what you need help with (paste the ERRORLOG lines if relevant):\n\n\n" +
+            "----- version / environment (leave this in) -----\n" +
+            Diagnostics + "\n";
+
+        var mailto = $"mailto:{ContactEmail}?subject={Uri.EscapeDataString(subject)}&body={Uri.EscapeDataString(body)}";
+        await ui.OpenUrlAsync(mailto);
     }
 }
