@@ -30,18 +30,42 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" Padding="0,0,14,0">
                 <StackPanel Spacing="2">
-                    <TextBlock Text="What it means" Classes="section"/>
-                    <TextBlock Text="{Binding Meaning}" TextWrapping="Wrap"/>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,2">
+                        <TextBlock Text="What it means" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy to clipboard"
+                                Command="{Binding CopyTextCommand}" CommandParameter="{Binding Meaning}">
+                            <Path Data="{StaticResource CopyIconData}"/>
+                        </Button>
+                    </Grid>
+                    <TextBlock Text="{Binding Meaning, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
 
-                    <TextBlock Text="Investigate" Classes="section"/>
-                    <TextBlock Text="{Binding Investigate}" TextWrapping="Wrap"/>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,2">
+                        <TextBlock Text="Investigate" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy Investigate steps"
+                                Command="{Binding CopyTextCommand}" CommandParameter="{Binding Investigate}">
+                            <Path Data="{StaticResource CopyIconData}"/>
+                        </Button>
+                    </Grid>
+                    <TextBlock Text="{Binding Investigate, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
 
-                    <TextBlock Text="Fix" Classes="section"/>
-                    <TextBlock Text="{Binding Fix}" TextWrapping="Wrap"/>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,2">
+                        <TextBlock Text="Fix" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy Fix steps"
+                                Command="{Binding CopyTextCommand}" CommandParameter="{Binding Fix}">
+                            <Path Data="{StaticResource CopyIconData}"/>
+                        </Button>
+                    </Grid>
+                    <TextBlock Text="{Binding Fix, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
 
                     <StackPanel IsVisible="{Binding HasKeyTools}" Spacing="2">
-                        <TextBlock Text="Key tools" Classes="section"/>
-                        <TextBlock Text="{Binding KeyTools}" TextWrapping="Wrap"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,2">
+                            <TextBlock Text="Key tools" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                            <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy to clipboard"
+                                    Command="{Binding CopyTextCommand}" CommandParameter="{Binding KeyTools}">
+                                <Path Data="{StaticResource CopyIconData}"/>
+                            </Button>
+                        </Grid>
+                        <TextBlock Text="{Binding KeyTools, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
                     </StackPanel>
 
                     <StackPanel IsVisible="{Binding HasDocsUrl}" Spacing="2">

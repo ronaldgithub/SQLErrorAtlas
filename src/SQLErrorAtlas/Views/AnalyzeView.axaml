@@ -7,7 +7,7 @@
              x:DataType="vm:AnalyzeViewModel">
 
     <Grid RowDefinitions="Auto,Auto,Auto,*">
-        <TextBox Grid.Row="0"
+        <TextBox Grid.Row="0" Name="LogBox"
                  Text="{Binding LogText}"
                  AcceptsReturn="True" AcceptsTab="False"
                  TextWrapping="NoWrap"

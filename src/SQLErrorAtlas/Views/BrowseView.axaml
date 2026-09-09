@@ -39,15 +39,42 @@
             <TabControl Grid.Row="1">
                 <TabItem Header="Guidance">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" Padding="0,0,14,0">
-                        <StackPanel Spacing="4" Margin="0,4,0,0">
-                            <TextBlock Text="What it means" Classes="section"/>
-                            <TextBlock Text="{Binding WhatItMeans}" TextWrapping="Wrap"/>
-                            <TextBlock Text="Investigate" Classes="section"/>
-                            <TextBlock Text="{Binding Investigate}" TextWrapping="Wrap"/>
-                            <TextBlock Text="Fix" Classes="section"/>
-                            <TextBlock Text="{Binding Fix}" TextWrapping="Wrap"/>
-                            <TextBlock Text="Key tools" Classes="section"/>
-                            <TextBlock Text="{Binding KeyTools}" TextWrapping="Wrap"/>
+                        <StackPanel Spacing="2" Margin="0,4,0,0">
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,2">
+                                <TextBlock Text="What it means" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy to clipboard"
+                                        Command="{Binding CopyTextCommand}" CommandParameter="{Binding WhatItMeans}">
+                                    <Path Data="{StaticResource CopyIconData}"/>
+                                </Button>
+                            </Grid>
+                            <TextBlock Text="{Binding WhatItMeans, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,2">
+                                <TextBlock Text="Investigate" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy Investigate steps"
+                                        Command="{Binding CopyTextCommand}" CommandParameter="{Binding Investigate}">
+                                    <Path Data="{StaticResource CopyIconData}"/>
+                                </Button>
+                            </Grid>
+                            <TextBlock Text="{Binding Investigate, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,2">
+                                <TextBlock Text="Fix" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy Fix steps"
+                                        Command="{Binding CopyTextCommand}" CommandParameter="{Binding Fix}">
+                                    <Path Data="{StaticResource CopyIconData}"/>
+                                </Button>
+                            </Grid>
+                            <TextBlock Text="{Binding Fix, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,2">
+                                <TextBlock Text="Key tools" Classes="section" Margin="0" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Classes="icon" ToolTip.Tip="Copy to clipboard"
+                                        Command="{Binding CopyTextCommand}" CommandParameter="{Binding KeyTools}">
+                                    <Path Data="{StaticResource CopyIconData}"/>
+                                </Button>
+                            </Grid>
+                            <TextBlock Text="{Binding KeyTools, Converter={x:Static local:Converters.NumberedListToLines}}" TextWrapping="Wrap"/>
 
                             <StackPanel IsVisible="{Binding HasRelatedIssues}" Spacing="4">
                                 <TextBlock Text="Related deep-dive runbooks" Classes="section"/>

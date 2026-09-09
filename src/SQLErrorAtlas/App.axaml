@@ -10,6 +10,9 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <!-- outline "copy" icon: front sheet + back-sheet corner -->
+            <StreamGeometry x:Key="CopyIconData">M5.5,5.5 H13.5 V15.5 H5.5 Z M3.5,10.5 V3.5 H10.5</StreamGeometry>
+
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="UrgencyEmergencyBrush" Color="#F87171"/>
@@ -62,6 +65,27 @@
             <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Padding" Value="6,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style Selector="Button.icon">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.icon > Path">
+            <Setter Property="Stroke" Value="{DynamicResource SubtleTextBrush}"/>
+            <Setter Property="StrokeThickness" Value="1.3"/>
+            <Setter Property="StrokeLineCap" Value="Round"/>
+            <Setter Property="StrokeJoin" Value="Round"/>
+            <Setter Property="Width" Value="17"/>
+            <Setter Property="Height" Value="19"/>
+        </Style>
+        <Style Selector="Button.icon:pointerover > Path">
+            <Setter Property="Stroke" Value="{DynamicResource UrgencyLowBrush}"/>
         </Style>
     </Application.Styles>
 </Application>
